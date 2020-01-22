@@ -1,5 +1,6 @@
 import java.io.IOException;
 import java.math.BigInteger;
+import java.nio.charset.StandardCharsets;
 import java.security.SecureRandom;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -31,7 +32,6 @@ public class TestBase {
   public final String FORUM_ENDPOINT = "forum";
   public final String CONTENT_TYPE = "Content-type";
   public final String APPLICATION_JSON = "application/json";
-  private final String TEST_USER_PREFIX = "test_user";
 
   @After
   public void stopClient() throws IOException {
@@ -71,7 +71,7 @@ public class TestBase {
   public String generateUsername() {
     Date today = Calendar.getInstance().getTime();
     DateFormat dateFormat = new SimpleDateFormat("yyMMdd");
-    return String.format("%s%s%s", TEST_USER_PREFIX, dateFormat.format(today), randomString());
+    return String.format("%s%s%s", "test_user", dateFormat.format(today), randomString());
   }
 
   private String randomString() {
@@ -88,6 +88,6 @@ public class TestBase {
 
   public String getPayloadAsString(CloseableHttpResponse response) throws IOException {
     HttpEntity entity = response.getEntity();
-    return EntityUtils.toString(entity, "UTF-8");
+    return EntityUtils.toString(entity, StandardCharsets.UTF_8);
   }
 }
